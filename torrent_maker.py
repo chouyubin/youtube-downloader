@@ -1,4 +1,4 @@
-﻿"""种子文件生成模块 - 基于 torf"""
+"""种子文件生成模块 - 基于 torf"""
 
 import os
 from pathlib import Path

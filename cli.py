@@ -1,4 +1,4 @@
-﻿"""YouTube 视频下载器 - 命令行入口"""
+"""YouTube 视频下载器 - 命令行入口"""
 import os
 import sys
 
