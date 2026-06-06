@@ -3,8 +3,10 @@ __pycache__/
 *.py[cod]
 *.pyo
 *.egg-info/
+*.spec
 dist/
 build/
+release/
 .eggs/
 
 # Virtual env
@@ -26,6 +28,9 @@ Thumbs.db
 .theme_config
 .lang_config
 *.torrent
+*.exe
+tools/_downloads/
+tools/bin/
 
 # Downloads
 Downloads/

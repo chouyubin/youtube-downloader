@@ -1,14 +1,19 @@
 ﻿"""YouTube 视频下载器 - 命令行入口"""
+import os
 import sys
-import io
+
+APP_DIR = os.path.dirname(os.path.abspath(__file__))
+if APP_DIR not in sys.path:
+    sys.path.insert(0, APP_DIR)
 
 # 修复 Windows GBK 编码问题
-if sys.platform == "win32" and sys.stdout:
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
-    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
+if sys.platform == "win32":
+    if sys.stdout:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    if sys.stderr:
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 import argparse
-import os
 from downloader import YouTubeDownloader, check_ffmpeg
 from torrent_maker import TorrentMaker
 
@@ -33,8 +38,8 @@ def main():
                         choices=["best", "4k", "1440p", "1080p", "720p", "480p", "360p"],
                         help="画质 (默认: best)")
     parser.add_argument("-f", "--format", default="mp4",
-                        choices=["mp4", "mkv", "webm"],
-                        help="输出格式 (默认: mp4)")
+                        choices=["mp4", "mkv", "webm", "mp3", "m4a", "opus"],
+                        help="输出格式；音频模式支持 mp3/m4a/opus (默认: mp4)")
     parser.add_argument("--audio", action="store_true", help="仅下载音频")
     parser.add_argument("--subtitle", action="store_true", help="下载字幕")
     parser.add_argument("--sub-lang", default="zh-Hans,en", help="字幕语言 (默认: zh-Hans,en)")
@@ -44,6 +49,10 @@ def main():
     parser.add_argument("--proxy", default="", help="代理地址，例: http://127.0.0.1:7890")
 
     args = parser.parse_args()
+
+    video_formats = {"mp4", "mkv", "webm"}
+    if not args.audio and args.format not in video_formats:
+        parser.error("-f/--format 只有在 --audio 模式下才支持 mp3/m4a/opus")
 
     if not args.url:
         # 交互模式
@@ -65,7 +74,8 @@ def main():
         print("正在获取视频信息...")
         info = downloader.get_video_info(args.url)
         if info is None or "error" in info:
-            print(f"获取失败: {info.get('error', 'Unknown')}")
+            err = info.get("error", "Unknown") if info else "Unknown"
+            print(f"获取失败: {err}")
             return
         dur = info.get("duration", 0)
         print(f"\n  标题: {info['title']}")

@@ -1,10 +1,13 @@
 """YouTube Downloader GUI with i18n"""
-import os, sys, io, threading, time
+import os, sys, threading, time
 from pathlib import Path
 from tkinter import *
 from tkinter import ttk, filedialog, messagebox
-if sys.platform == "win32" and sys.stdout:
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+APP_DIR = str(Path(__file__).resolve().parent)
+if APP_DIR not in sys.path:
+    sys.path.insert(0, APP_DIR)
+if sys.platform == "win32" and hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 from downloader import YouTubeDownloader, check_ffmpeg, check_aria2
 from torrent_maker import TorrentMaker
 from i18n import I18n, load_lang

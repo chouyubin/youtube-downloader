@@ -1,9 +1,38 @@
 """YouTube 视频下载核心模块 - 基于 yt-dlp"""
 
-import os, re, subprocess, time
+import os, subprocess, sys, time
 from pathlib import Path
-from typing import Optional, Callable
 import yt_dlp
+
+
+def _prepend_local_tool_paths():
+    bases = [Path(__file__).resolve().parent]
+    if getattr(sys, "frozen", False):
+        bases.append(Path(sys.executable).resolve().parent)
+    bundle_dir = getattr(sys, "_MEIPASS", None)
+    if bundle_dir:
+        bases.append(Path(bundle_dir).resolve())
+
+    candidates = []
+    for base in bases:
+        candidates.extend([
+            base / "tools" / "bin",
+            base / "tools" / "aria2",
+            base / "tools" / "ffmpeg" / "bin",
+        ])
+
+    existing = [str(path) for path in candidates if path.is_dir()]
+    if not existing:
+        return
+
+    path_parts = os.environ.get("PATH", "").split(os.pathsep)
+    for tool_dir in reversed(existing):
+        if tool_dir not in path_parts:
+            path_parts.insert(0, tool_dir)
+    os.environ["PATH"] = os.pathsep.join(path_parts)
+
+
+_prepend_local_tool_paths()
 
 
 def check_ffmpeg() -> bool:
@@ -159,7 +188,7 @@ class YouTubeDownloader:
         concurrent = self._threads if self._multi_thread else 1
         opts = {
             "outtmpl": outtmpl, "progress_hooks": [self._progress_hook],
-            "quiet": self._console_enabled, "noprogress": True,
+            "quiet": not self._console_enabled, "noprogress": True,
             "no_warnings": not self._console_enabled,
             "retries": 10, "fragment_retries": 10, "extractor_retries": 5,
             "external_downloader": external_dl,
