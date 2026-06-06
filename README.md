@@ -25,7 +25,7 @@
 | 🚀 **GPU 硬件加速** | 自动识别 NVIDIA / AMD / Intel 显卡，视频转码时使用硬件编码器 (NVENC/AMF/QSV) |
 | 🌐 **代理支持** | 内置代理配置与测试，轻松访问受限内容 |
 | 🍪 **Cookie 认证** | 支持从 Chrome / Firefox / Edge / Brave / Opera 读取登录态，绕过 YouTube 人机验证 |
-| 🎨 **主题切换** | 内置 6 款 VS Code 风格主题（暗黑/亮色），一键切换 |
+| 🎨 **主题切换** | 内置 9 款 VS Code 风格主题（暗黑/亮色），一键切换 |
 | 🌍 **中英文切换** | 界面完整支持中文 / English 实时切换 |
 | 📋 **内置控制台** | GUI 内嵌日志面板 + 可切换 yt-dlp 原生控制台输出 |
 | 🔧 **aria2 支持** | 可选启用 aria2 外部下载器 |
@@ -63,6 +63,10 @@ python main.py
 ### Windows 一键启动
 
 双击 `启动.bat` 即可运行。
+
+### Windows 安装包
+
+提供 `release/YouTubeDownloaderSetup.exe` 安装包，安装时会自动配置 FFmpeg 和 aria2。安装后桌面和开始菜单会创建快捷方式。
 
 ### FFmpeg 安装
 
@@ -123,18 +127,26 @@ python cli.py "https://www.youtube.com/watch?v=VIDEO_ID" --quality 1080p --forma
 
 ```
 youtube-downloader/
-├── main.py            # GUI 主程序 (Tkinter, ~720 行)
-├── main.pyw           # Windows 无控制台启动入口
-├── downloader.py      # 下载核心模块 (基于 yt-dlp)
-├── i18n.py            # 中英文语言包
-├── themes.py          # VS Code 风格主题系统
-├── torrent_maker.py   # 种子文件生成模块
-├── cli.py             # 命令行工具
-├── requirements.txt   # Python 依赖
-├── 启动.bat           # Windows 一键启动脚本
-├── .theme_config      # 主题配置持久化
-└── .lang_config       # 语言配置持久化
+├── main.py                # GUI 主程序 (Tkinter, ~810 行)
+├── main.pyw               # Windows 无控制台启动入口
+├── downloader.py          # 下载核心模块 (基于 yt-dlp)
+├── i18n.py                # 中英文语言包
+├── themes.py              # VS Code 风格主题系统 (9 款主题)
+├── torrent_maker.py       # 种子文件生成模块 (基于 torf)
+├── cli.py                 # 命令行工具
+├── requirements.txt       # Python 依赖 (yt-dlp, torf)
+├── 启动.bat               # Windows 一键启动脚本
+├── LICENSE                # MIT 许可证
+├── scripts/
+│   ├── build_installer.ps1    # PowerShell 安装包构建脚本
+│   └── installer_launcher.py  # 安装程序入口 (自动下载 FFmpeg/aria2)
+└── release/
+    └── YouTubeDownloaderSetup.exe  # 安装包
 ```
+
+运行时自动生成的配置文件（已加入 .gitignore）：
+- `.theme_config` — 主题配置
+- `.lang_config` — 语言配置
 
 ---
 
@@ -143,8 +155,18 @@ youtube-downloader/
 - **[yt-dlp](https://github.com/yt-dlp/yt-dlp)** — YouTube 视频提取与下载引擎
 - **[Tkinter](https://docs.python.org/3/library/tkinter.html)** — Python 标准 GUI 库
 - **[torf](https://github.com/rndusr/torf)** — Torrent 文件生成
+- **[PyInstaller](https://pyinstaller.org/)** — 打包为独立可执行文件
 - **FFmpeg** — 音视频合并、转码、GPU 硬件加速
 - **aria2** — 多线程外部下载器
+
+### 构建安装包
+
+```powershell
+# 在项目根目录执行
+.\scripts\build_installer.ps1
+```
+
+构建完成后，安装包位于 `release/YouTubeDownloaderSetup.exe`。
 
 ---
 

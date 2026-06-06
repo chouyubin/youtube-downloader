@@ -16,6 +16,7 @@ TRANSLATIONS = {
         "extracting": "正在提取视频信息...",
         "parse_fail": "解析失败 — 请检查链接或代理",
         "invalid_url": "请输入有效的 YouTube 链接",
+        "conn_busy": "连接繁忙，请稍后重试",
         "options": "下载选项",
         "multi_thread": "多线程加速",
         "quality": "画质",
@@ -80,6 +81,10 @@ TRANSLATIONS = {
 
         # Language
         "language": "语言",
+
+        # Cookies
+        "cookies": "Cookie 认证",
+        "cookies_hint": "选择已登录 YouTube 的浏览器，用于绕过人机验证（使用前需关闭该浏览器）",
     },
     "en": {
         "app_title": "YouTube Downloader",
@@ -94,6 +99,7 @@ TRANSLATIONS = {
         "extracting": "Extracting video info...",
         "parse_fail": "Parse failed — check link or proxy",
         "invalid_url": "Please enter a valid YouTube URL",
+        "conn_busy": "Connection busy, please try again later",
         "options": "Options",
         "multi_thread": "Multi-thread",
         "quality": "Quality",
@@ -158,6 +164,10 @@ TRANSLATIONS = {
 
         # Language
         "language": "Language",
+
+        # Cookies
+        "cookies": "Cookie Auth",
+        "cookies_hint": "Select the browser logged into YouTube to bypass bot verification (close the browser first)",
     },
 }
 

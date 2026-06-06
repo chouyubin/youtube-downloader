@@ -341,9 +341,6 @@ class YouTubeDownloaderApp:
         self._t = self.i18n.t
         self.root.title(self._t("app_title"))
         self.status_var.set(self._t("ready"))
-        # 按钮文本通过 textvariable 或直接设置在这里由 _rebuild_ui 处理
-        # 这里只处理动态 textvariable
-        self.status_var.set(self._t("ready"))
 
     def _rebuild_ui(self):
         """重建 UI（语言/主题切换时调用）"""
@@ -536,11 +533,6 @@ class YouTubeDownloaderApp:
 
         mf.grid_rowconfigure(5, weight=1)
         self.status_var.set(T("ready"))
-
-    def _switch_theme(self, name):
-        apply_theme(name)
-        self.app._rebuild_ui()
-        self.w.destroy()
 
     def _switch_language(self, lang):
         self.i18n.switch(lang)
