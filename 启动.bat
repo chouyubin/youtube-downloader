@@ -1,10 +1,9 @@
-@echo off
+﻿@echo off
 chcp 65001 >nul 2>nul
 pushd "%~dp0"
 
-:: 设置工具路径（按需修改）
-if exist "D:\Tool\ffmpeg\bin" set "PATH=D:\Tool\ffmpeg\bin;%PATH%"
-if exist "D:\Tool\aria2" set "PATH=D:\Tool\aria2;%PATH%"
+:: 设置本地工具路径（优先使用打包的 FFmpeg + Aria2）
+if exist "%~dp0tools\bin" set "PATH=%~dp0tools\bin;%PATH%"
 
 :: 查找 Python
 set "PYEXE="

@@ -30,7 +30,8 @@ Thumbs.db
 *.torrent
 *.exe
 tools/_downloads/
-tools/bin/
+# tools/bin/ tracked - bundled FFmpeg + Aria2 binaries
+!tools/bin/
 
 # Downloads
 Downloads/

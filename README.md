@@ -6,7 +6,7 @@
   <img src="https://img.shields.io/badge/Python-3.9+-blue.svg" alt="Python">
   <img src="https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg" alt="Platform">
   <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License">
-  <img src="https://img.shields.io/badge/yt--dlp-2025+-red.svg" alt="yt-dlp">
+  <img src="https://img.shields.io/badge/yt--dlp-2026.3-red.svg" alt="yt-dlp">
 </p>
 
 ---

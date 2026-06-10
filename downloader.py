@@ -140,8 +140,8 @@ class YouTubeDownloader:
         self.proxy = proxy.strip() if proxy else ""
         self.cookies_from_browser = ""  # e.g. "chrome", "firefox", "edge"
         self.cookies_file = ""  # path to cookies.txt
-        self._multi_thread = True
-        self._threads = 8
+        self._multi_thread = False
+        self._threads = 1
         self._use_aria2 = False
         self._force_ipv4 = True
         self._progress_callback = None
@@ -192,14 +192,14 @@ class YouTubeDownloader:
             "no_warnings": not self._console_enabled,
             "retries": 10, "fragment_retries": 10, "extractor_retries": 5,
             "external_downloader": external_dl,
-            "socket_timeout": 30, "concurrent_fragment_downloads": concurrent,
+            "socket_timeout": 60, "concurrent_fragment_downloads": concurrent,
             "force_ipv4": self._force_ipv4,
             "logger": _ConsoleLogger(self._console_callback) if self._console_enabled else None,
         }
         if self.proxy: opts["proxy"] = self.proxy
         # Cookies for authentication
         if self.cookies_from_browser:
-            opts["cookiesfrombrowser"] = self.cookies_from_browser
+            opts["cookiesfrombrowser"] = (self.cookies_from_browser,)
         elif self.cookies_file:
             opts["cookiefile"] = self.cookies_file
         # aria2 默认不启用，避免网络不稳定时失败
@@ -231,10 +231,10 @@ class YouTubeDownloader:
         return opts
 
     def _base_opts(self):
-        opts = {"quiet": True, "no_warnings": True, "socket_timeout": 30, "retries": 5, "extractor_retries": 3, "force_ipv4": True}
+        opts = {"quiet": True, "no_warnings": True, "socket_timeout": 60, "retries": 5, "extractor_retries": 3, "force_ipv4": True}
         if self.proxy: opts["proxy"] = self.proxy
         if self.cookies_from_browser:
-            opts["cookiesfrombrowser"] = self.cookies_from_browser
+            opts["cookiesfrombrowser"] = (self.cookies_from_browser,)
         elif self.cookies_file:
             opts["cookiefile"] = self.cookies_file
         return opts
