@@ -1,8 +1,8 @@
 # -*- mode: python ; coding: utf-8 -*-
 from PyInstaller.utils.hooks import collect_all
-import os
+import os, glob
 
-SPEC_DIR = os.path.dirname(os.path.abspath(SPECPATH or r"D:\Project\youtube-downloader\YouTubeDownloader.spec"))
+SPEC_DIR = os.path.dirname(os.path.abspath(SPECPATH or __file__))
 datas = []
 binaries = []
 hiddenimports = []
@@ -12,12 +12,10 @@ tmp_ret = collect_all('torf')
 datas += tmp_ret[0]; binaries += tmp_ret[1]; hiddenimports += tmp_ret[2]
 
 # Bundle tools (FFmpeg + Aria2)
-TOOLS_DIR = os.path.join(SPEC_DIR, 'tools', 'bin')
-if os.path.isdir(TOOLS_DIR):
-    for f in os.listdir(TOOLS_DIR):
-        fp = os.path.join(TOOLS_DIR, f)
-        if os.path.isfile(fp):
-            binaries.append((fp, os.path.join('tools', 'bin', f), 'BINARY'))
+tools_dir = os.path.join(SPEC_DIR, 'tools', 'bin')
+for exe in glob.glob(os.path.join(tools_dir, '*.exe')):
+    name = os.path.basename(exe)
+    binaries.append((exe, os.path.join('tools', 'bin', name), 'BINARY'))
 
 
 a = Analysis(
