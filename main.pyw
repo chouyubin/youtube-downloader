@@ -1,4 +1,6 @@
 """Windows no-console entry point for the Tkinter GUI."""
+import multiprocessing
+multiprocessing.freeze_support()
 from pathlib import Path
 import sys
 

@@ -34,7 +34,11 @@ if %ERRORLEVEL% neq 0 (
     )
 )
 
-:: 启动应用
+:: 启动应用（无控制台窗口）
 echo 启动 YouTube 下载器...
-start "" "%PYEXE%" "%~dp0main.py"
+if exist "%~dp0main.pyw" (
+    "%PYEXE%" "%~dp0main.pyw"
+) else (
+    "%PYEXE%" "%~dp0main.py"
+)
 popd

@@ -1,4 +1,6 @@
 """YouTube Downloader GUI with i18n"""
+import multiprocessing
+multiprocessing.freeze_support()
 import os, sys, threading, time
 from pathlib import Path
 from tkinter import *
